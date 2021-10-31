@@ -1,0 +1,94 @@
+<h2>Template: Básicos</h2>
+<hr>
+
+
+<!--Cargamos Producto-->
+<div class="row">
+    <div class="col">
+
+        <form (ngSubmit)="guardar( )" #miFormulario="ngForm" autocomplete="off">
+
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Producto</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           class="form-control"
+                           ngModel
+                           name="producto"
+                           placeholder="Nombre del producto"
+                           required
+                           minlength="3">
+                    <span class="form-text text-danger"
+                        *ngIf="nombreValido()"> Debe de ser de 3 letras</span>       
+                    <!--con ngModel lo que hacemos es decir a Angular que coja los datos del formulario
+                    y por obligación tiene que tener el name.
+                    con*ngIf creamos el condicional y creamos la validación controlando el nombre del producto
+                    en este caso y para que no salga el condicional si o si, con el touched decimos que lo tiene
+                    que tocar el usuario para que salga da condición
+                    El código se ha enviado a basicos.components para simplificar aqui-->
+    </div>
+</div>
+
+
+<!--Cargamos Precio-->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Precio</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           ngModel
+                           name="precio"
+                           placeholder="Precio del producto"
+                           required>
+                    <span class="form-text text-danger"
+                          *ngIf="precioValido()"> El precio debe ser mayor que 0</span> 
+                </div>
+            </div>
+
+
+<!--Existencias-->
+
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Existencias del Producto</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           ngModel
+                           name="existencias"
+                           customMin
+                           minimo="0"
+                           placeholder="Existencias del producto"
+                           required>
+                           <!--para que el campo sea necesario para pasar a true-->
+                </div>
+            </div>
+                        
+        <div class="row">
+            <div class="col">
+                <br>  
+                <button type="submit"
+                [disabled]="miFormulario.invalid"
+                        class="btn btn-primary float-end">
+                    Guardar
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+<div class="row">
+    <div class="col">
+
+        <span>Valid</span>
+        <pre>{{miFormulario.valid}}</pre>
+
+        <span>Pristine</span>
+        <pre>{{miFormulario.pristine}}</pre>
+
+        <span>Touched</span>
+        <pre>{{miFormulario.touched}}</pre>
+        <!--touched se emplea para saber si el usuario ha tocado el formulario-->
+        <span>Value</span>
+        <pre>{{miFormulario.value | json}}</pre>
+    </div>
+</div>

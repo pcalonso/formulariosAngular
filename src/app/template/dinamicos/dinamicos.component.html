@@ -1,0 +1,76 @@
+<h2>Template: Dinámicos</h2>
+<hr>
+
+<form (ngSubmit)="guardar( )" #miFormulario='ngForm' autocomplete="off">
+
+    <!--Nombre-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+            <input class="form-control"
+                    [ngModel]="persona.nombre"
+                    name="nombre"
+                    placeholder="Nombre de la persona"
+                    required>
+            
+            <span class="form-text text-danger"
+                    *ngIf="nombreValido()">Debe ser un nombre válido</span>        
+        </div>
+    </div>
+
+    <!--Agregar Favorito-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input class="form-control"
+                        placeholder="Agregar favorito"
+                        [(ngModel)]="nuevoJuego"
+                        (keyup.center)="agregarJuego()"
+                        name="nuevoJuego">
+                        <!--creamos una nueva propiedad para añadir dinámicamente-->
+                <button class="btn btn-outline-primary"
+                        type="button"
+                        (click)="agregarJuego()">
+                        <!--agregamos esta instrucción pero sin necesidad de agregar nada mas porque
+                        ya lo tengo en la propiedad nuevo juego-->
+                    Agregar
+                </button>        
+            </div>
+        </div>
+    </div>
+
+
+    <!--Lista de Juegos Favoritos-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+        <div class="col-sm-9">
+            <div class="input-group  mb-1" *ngFor="let juego of persona.favoritos; let i=index">
+                <input [(ngModel)]="juego.nombre"
+                name="favorito_{{ i }}"
+                class="form-control"
+                required>
+            <button class="btn btn-outline-danger"
+                type="button"
+                (click)="eliminar(i)">
+                Eliminar
+             </button>       
+            </div>    
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sam-12">
+            <button type="button" 
+                    class="btn btn-primary float-end"
+                    [disabled]="miFormulario.invalid"
+                    (click)="guardar()"> 
+                Guardar
+            </button>
+        </div>
+    </div>
+
+
+
+<span>Persona</span>
+<pre>{{ persona | json}}</pre>
